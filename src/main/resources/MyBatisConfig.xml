@@ -1,0 +1,32 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="mybatis.model.Employee" alias="Employee"/>
+        <typeAlias type="mybatis.model.Project" alias="Project"/>
+        <typeAlias type="mybatis.model.Department" alias="Department"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JTA">
+                <property name="userTransaction" value="java:comp/UserTransaction"/>
+            </transactionManager>
+            <dataSource type="JNDI">
+                <property name="data_source" value="java:/PostgreDS"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+        <mapper resource="mappers/ProjectMapper.xml"/>
+        <mapper resource="mappers/DepartmentMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="pskDB" targetRuntime="MyBatis3Simple">
+        <jdbcConnection driverClass="org.postgresql.Driver"
+                        connectionURL="jdbc:postgresql://localhost:5432/pskDB"
+                        userId="postgres"
+                        password="postgres">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="mybatis.model"  targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mybatis.xml"  targetProject="src/main/resources"/>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="mybatis.mapper" targetProject="src/main/java"/>
+
+        <table schema="public" tableName="employee">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+        </table>
+
+        <table schema="public" tableName="project">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+        </table>
+        <table schema="public" tableName="department">
+            <generatedKey column="id" identity="true" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://java.sun.com/jsf/composite">
+<h:body>
+    <h2>Employees assigned to #{employeesForProjBean.project.title} project:</h2>
+    <ol>
+        <ui:repeat value="#{employeesForProjBean.project.employees}" var="employee">
+            <li>
+                <h:link value="#{employee.firstName}" outcome="employeeDetails?employeeId=#{employee.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <div>
+            <h:outputLabel value="First Name: " for="firstNameInput"/>
+            <h:inputText id="firstNameInput" a:placeholder="First Name" value="#{employeesForProjBean.employee.firstName}" required="true" />
+        </div>
+        <div>
+            <h:outputLabel value="Last Name: " for="lastNameInput"/>
+            <h:inputText id="lastNameInput" a:placeholder="Last Name" value="#{employeesForProjBean.employee.lastName}" required="true" />
+        </div>
+        <br/>
+        <h:commandButton value="Add employee to project"
+                         actionListener="#{employeesForProjBean.createEmployee()}"
+                         action="#{'projectDetails?faces-redirect=true&amp;projectId='.concat(employeesForProjBean.project.id)}">
+            <f:param name="projectId" value="#{employeesForProjBean.project.id}"/>
+        </h:commandButton>
+    </h:form>
+    <br/>
+    <h:link outcome="index" value="Back to index page"/>
+</h:body>
+</html>
