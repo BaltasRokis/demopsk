@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import lombok.*;
 
@@ -21,7 +22,7 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private int id;
+    private Integer id;
 
     @Size(max = 100)
     @Column(name = "FIRST_NAME")
@@ -40,7 +41,7 @@ public class Employee implements Serializable {
 
     @Version
     @Column(name = "OPT_LOCK_VERSION")
-    private int version;
+    private Integer version;
 
     @Override
     public boolean equals(Object o) {

@@ -3,8 +3,9 @@ package persistence;
 import entities.Employee;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 
-@Stateless
+@ApplicationScoped
 public class EmployeeDAO extends BaseDAO<Employee> {
 
     protected EmployeeDAO() {
@@ -19,5 +20,4 @@ public class EmployeeDAO extends BaseDAO<Employee> {
                 .setParameter("id", id)
                 .getSingleResult();
     }
-
 }

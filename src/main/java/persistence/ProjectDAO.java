@@ -1,9 +1,12 @@
 package persistence;
 
+import entities.Employee;
 import entities.Project;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import java.util.Collections;
+import java.util.List;
 
-@Stateless
+@ApplicationScoped
 public class ProjectDAO extends BaseDAO<Project> {
 
     protected ProjectDAO() {
@@ -17,5 +20,16 @@ public class ProjectDAO extends BaseDAO<Project> {
                         Project.class)
                 .setParameter("id", id)
                 .getSingleResult();
+    }
+
+    public List<Employee> findEmployeesNotAssignedToProject(Integer projectId) {
+        if (projectId == null) {
+            return Collections.emptyList();
+        }
+        return em.createQuery(
+                        "SELECT e FROM Employee e WHERE NOT EXISTS (SELECT p FROM e.tasks p WHERE p.id = :projectId)",
+                Employee.class)
+            .setParameter("projectId", projectId)
+            .getResultList();
     }
 }

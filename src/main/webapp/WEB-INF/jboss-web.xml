@@ -1,0 +1,3 @@
+<jboss-web>
+    <context-root>/demopsk</context-root>
+</jboss-web>

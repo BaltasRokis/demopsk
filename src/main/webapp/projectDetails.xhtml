@@ -4,32 +4,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://java.sun.com/jsf/composite">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:metadata>
+    <f:viewParam name="projectId" value="#{projectDetailsBean.projectId}" required="true"/>
+    <f:event type="preRenderView" listener="#{projectDetailsBean.loadProjectDetails}"/>
+</f:metadata>
 <h:body>
-    <h2>Employees assigned to #{employeesForProjBean.project.title} project:</h2>
-    <ol>
-        <ui:repeat value="#{employeesForProjBean.project.employees}" var="employee">
-            <li>
-                <h:link value="#{employee.firstName}" outcome="employeeDetails?employeeId=#{employee.id}" />
-            </li>
-        </ui:repeat>
-    </ol>
+    <h:form>
+        <h2>Employees assigned to #{projectDetailsBean.project.title} project:</h2>
+        <ol>
+            <ui:repeat value="#{projectDetailsBean.project.employees}" var="employee">
+                <li>
+                    <h:link value="#{employee.firstName} #{employee.lastName}" outcome="employeeDetails?employeeId=#{employee.id}" />
+                    <h:commandButton value="x"
+                              actionListener="#{projectDetailsBean.removeEmployeeFromProject(employee.id)}"
+                              action="#{'projectDetails?faces-redirect=true&amp;projectId='.concat(projectDetailsBean.project.id)}"/>
+                </li>
+            </ui:repeat>
+        </ol>
+        <h2>Newbies to the project:</h2>
+        <ol>
+            <ui:repeat value="#{projectDetailsBean.getNewEmployees()}" var="employee">
+                <li>#{employee.firstName} #{employee.lastName}</li>
+            </ui:repeat>
+        </ol>
+    </h:form>
     <h:form>
         <div>
-            <h:outputLabel value="First Name: " for="firstNameInput"/>
-            <h:inputText id="firstNameInput" a:placeholder="First Name" value="#{employeesForProjBean.employee.firstName}" required="true" />
-        </div>
-        <div>
-            <h:outputLabel value="Last Name: " for="lastNameInput"/>
-            <h:inputText id="lastNameInput" a:placeholder="Last Name" value="#{employeesForProjBean.employee.lastName}" required="true" />
+            <h:outputLabel value="Employees that are free:" for="employeeCheckboxes" />
+            <h:selectManyCheckbox id="employeeCheckboxes" value="#{projectDetailsBean.selectedEmployeeIds}" layout="pageDirection">
+                <f:selectItems value="#{projectDetailsBean.availableEmployees}" var="emp"
+                               itemValue="#{emp.id}" itemLabel="#{emp.firstName} #{emp.lastName} - #{emp.department.name}" />
+            </h:selectManyCheckbox>
         </div>
         <br/>
         <h:commandButton value="Add employee to project"
-                         actionListener="#{employeesForProjBean.createEmployee()}"
-                         action="#{'projectDetails?faces-redirect=true&amp;projectId='.concat(employeesForProjBean.project.id)}">
-            <f:param name="projectId" value="#{employeesForProjBean.project.id}"/>
+                         actionListener="#{projectDetailsBean.addEmployeesToProject()}"
+                         action="#{'projectDetails?faces-redirect=true&amp;projectId='.concat(projectDetailsBean.project.id)}">
+            <f:param name="projectId" value="#{projectDetailsBean.project.id}"/>
         </h:commandButton>
+    </h:form>
+    <h:form>
+        <h:commandButton value="DELETE THIS PROJECT"
+                         action="#{projectDetailsBean.deleteProject()}"/>
     </h:form>
     <br/>
     <h:link outcome="index" value="Back to index page"/>

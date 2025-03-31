@@ -6,14 +6,16 @@ import lombok.Setter;
 import persistence.DepartmentDAO;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-@Model
-public class DepartmentBean implements Serializable {
+@RequestScoped
+@Named("departmentBean")
+public class DepartmentsBean implements Serializable {
 
     @Inject
     private DepartmentDAO dao;

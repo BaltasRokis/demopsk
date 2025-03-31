@@ -3,7 +3,12 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:metadata>
+    <f:viewParam name="employeeId" value="#{employeeBean.employeeId}" required="true"/>
+    <f:event type="preRenderView" listener="#{employeeBean.loadEmployeeDetails}"/>
+</f:metadata>
 <h:body>
     <h2>Employee:</h2>
 
@@ -16,7 +21,7 @@
         <h3>Projects:</h3>
         <ul>
             <ui:repeat value="#{employeeBean.employee.tasks}" var="project">
-                <li>#{project.title} - #{project.description}</li>
+                <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /> - #{project.description}</li>
             </ui:repeat>
         </ul>
         <h:link outcome="index" value="Back to index"/>

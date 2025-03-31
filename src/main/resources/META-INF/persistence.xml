@@ -8,8 +8,7 @@
         <class>entities.Department</class>
         <class>entities.Project</class>
 
-        <properties>  <!--  <jta-data-source> MUST NOT be inside here -->
-<!--            <property name="hibernate.hbm2ddl.auto" value="create"/>-->
+        <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.show_sql" value="true"/>

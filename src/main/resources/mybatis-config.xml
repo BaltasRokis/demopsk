@@ -11,13 +11,12 @@
         <typeAlias type="mybatis.model.Employee" alias="Employee"/>
         <typeAlias type="mybatis.model.Project" alias="Project"/>
         <typeAlias type="mybatis.model.Department" alias="Department"/>
+        <typeAlias type="mybatis.model.ProjectEmployee" alias="ProjectEmployee"/>
     </typeAliases>
 
     <environments default="development">
         <environment id="development">
-            <transactionManager type="JTA">
-                <property name="userTransaction" value="java:comp/UserTransaction"/>
-            </transactionManager>
+            <transactionManager type="MANAGED"/>
             <dataSource type="JNDI">
                 <property name="data_source" value="java:/PostgreDS"/>
             </dataSource>
@@ -25,8 +24,9 @@
     </environments>
 
     <mappers>
-        <mapper resource="mappers/EmployeeMapper.xml"/>
-        <mapper resource="mappers/ProjectMapper.xml"/>
-        <mapper resource="mappers/DepartmentMapper.xml"/>
+        <mapper resource="mybatis.xml/ProjectEmployeeMapper.xml"/>
+        <mapper resource="mybatis.xml/EmployeeMapper.xml"/>
+        <mapper resource="mybatis.xml/ProjectMapper.xml"/>
+        <mapper resource="mybatis.xml/DepartmentMapper.xml"/>
     </mappers>
 </configuration>

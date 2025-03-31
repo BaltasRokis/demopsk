@@ -4,19 +4,25 @@ import entities.Project;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.ProjectDAO;
+import services.ProjectDisplayService;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-@Model
-public class ProjectBean implements Serializable {
+@RequestScoped
+@Named("projectBean")
+public class ProjectsBean implements Serializable {
 
     @Inject
     private ProjectDAO projectDAO;
+
+    @Inject
+    private ProjectDisplayService projectDisplayService;
 
     @Getter
     @Setter
@@ -33,6 +39,9 @@ public class ProjectBean implements Serializable {
     @Transactional
     public void create() {
         projectDAO.persist(project);
+        for (var emp : project.getEmployees()) {
+            projectDisplayService.addNewEmployeeToProject(project.getId(), emp);
+        }
     }
 
     private void loadProjects() {

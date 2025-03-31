@@ -1,9 +1,9 @@
 package persistence;
 
 import entities.Department;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 
-@Stateless
+@ApplicationScoped
 public class DepartmentDAO extends BaseDAO<Department> {
 
     protected DepartmentDAO() {

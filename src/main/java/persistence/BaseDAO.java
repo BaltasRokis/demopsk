@@ -6,23 +6,24 @@ import java.util.List;
 
 public abstract class BaseDAO<T> {
 
-    @PersistenceContext(unitName = "PostgrePU") // Container-managed EntityManager
-    protected EntityManager em; // Protected so subclasses can access it
+    @PersistenceContext(unitName = "PostgrePU")
+    protected EntityManager em;
 
-    private final Class<T> entityClass; // Store the entity class
+    private final Class<T> entityClass;
 
-    // Constructor to set the entity class
     protected BaseDAO(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
-    // Common DAO methods (can be overridden in subclasses if needed)
     public void persist(T entity) {
         em.persist(entity);
     }
 
-    public void remove(T entity) {
-        em.remove(em.merge(entity));
+    public void removeById(Object primaryKey) { // Use appropriate type for PK
+        T entityToRemove = em.find(entityClass, primaryKey); // Get the managed instance by ID
+        if (entityToRemove != null) { // Check if it exists
+            em.remove(entityToRemove);
+        }
     }
 
     public T find(Object id) {
@@ -32,7 +33,6 @@ public abstract class BaseDAO<T> {
     public T update(T entity) {
         return em.merge(entity);
     }
-    //find all method if the entity class has a named query findAll
     public List<T> findAll() {
         return em.createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass).getResultList();
     }
