@@ -11,19 +11,19 @@
 </f:metadata>
 <h:body>
     <h2>Employee:</h2>
-
         <p>ID: #{employeeBean.employee.id}</p>
         <p>Name: #{employeeBean.employee.firstName} #{employeeBean.employee.lastName}</p>
         <h:panelGroup rendered="#{employeeBean.employee.department != null}">
             <p>Department: #{employeeBean.employee.department.name}</p>
         </h:panelGroup>
-
-        <h3>Projects:</h3>
-        <ul>
-            <ui:repeat value="#{employeeBean.employee.tasks}" var="project">
-                <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /> - #{project.description}</li>
-            </ui:repeat>
-        </ul>
+        <h:panelGroup rendered="#{not empty employeeBean.employee.tasks}">
+            <h3>Projects:</h3>
+            <ul>
+                <ui:repeat value="#{employeeBean.employee.tasks}" var="project">
+                    <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /> - #{project.description}</li>
+                </ui:repeat>
+            </ul>
+        </h:panelGroup>
         <h:link outcome="index" value="Back to index"/>
 </h:body>
 </html>

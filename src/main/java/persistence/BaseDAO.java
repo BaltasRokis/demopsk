@@ -2,6 +2,7 @@ package persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 public abstract class BaseDAO<T> {
@@ -19,9 +20,9 @@ public abstract class BaseDAO<T> {
         em.persist(entity);
     }
 
-    public void removeById(Object primaryKey) { // Use appropriate type for PK
-        T entityToRemove = em.find(entityClass, primaryKey); // Get the managed instance by ID
-        if (entityToRemove != null) { // Check if it exists
+    public void removeById(Object primaryKey) {
+        T entityToRemove = em.find(entityClass, primaryKey);
+        if (entityToRemove != null) {
             em.remove(entityToRemove);
         }
     }
@@ -33,6 +34,7 @@ public abstract class BaseDAO<T> {
     public T update(T entity) {
         return em.merge(entity);
     }
+
     public List<T> findAll() {
         return em.createNamedQuery(entityClass.getSimpleName() + ".findAll", entityClass).getResultList();
     }

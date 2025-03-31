@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import mybatis.mapper.EmployeeMapper;
 import mybatis.mapper.ProjectEmployeeMapper;
-import mybatis.mapper.ProjectMapper;
 import mybatis.model.Employee;
 
 import javax.faces.view.ViewScoped;
