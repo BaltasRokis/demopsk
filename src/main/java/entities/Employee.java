@@ -1,7 +1,6 @@
 package entities;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import lombok.*;
 

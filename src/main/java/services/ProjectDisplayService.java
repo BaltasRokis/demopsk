@@ -14,9 +14,6 @@ import java.util.Map;
 @SessionScoped
 public class ProjectDisplayService implements Serializable {
 
-    @Inject
-    private ProjectDAO projectDAO;
-
     private Map<Integer, List<Employee>> newEmployees = new HashMap<>();
 
     public List<Employee> getNewEmployees(Integer id) {

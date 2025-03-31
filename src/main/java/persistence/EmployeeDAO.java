@@ -2,7 +2,6 @@ package persistence;
 
 import entities.Employee;
 
-import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
