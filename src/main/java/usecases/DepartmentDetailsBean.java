@@ -39,7 +39,7 @@ public class DepartmentDetailsBean implements Serializable {
         department = departmentDAO.find(departmentId);
     }
 
-//    @Transactional
+    @Transactional
     public void createEmployee() {
         var managedDepartment = departmentDAO.find(department.getId());
         employee.setDepartment(managedDepartment);
@@ -71,7 +71,7 @@ public class DepartmentDetailsBean implements Serializable {
             return null;
         var managedDep = departmentDAO.find(departmentId);
         if(managedDep == null || !managedDep.getEmployees().isEmpty())
-            return null;
+           return null;
 
         departmentDAO.removeById(departmentId);
         return "index?faces-redirect=true";

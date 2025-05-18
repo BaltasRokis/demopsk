@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <context id="pskDB" targetRuntime="MyBatis3Simple">
         <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://localhost:5432/pskDB"
+                        connectionURL="jdbc:postgresql://localhost:1234/demopsk"
                         userId="postgres"
                         password="postgres">
         </jdbcConnection>
