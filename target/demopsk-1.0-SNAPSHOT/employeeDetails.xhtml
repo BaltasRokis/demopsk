@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:metadata>
+    <f:viewParam name="employeeId" value="#{employeeBean.employeeId}" required="true"/>
+    <f:event type="preRenderView" listener="#{employeeBean.loadEmployeeDetails}"/>
+</f:metadata>
+<h:body>
+    <h2>Employee:</h2>
+        <p>ID: #{employeeBean.employee.id}</p>
+        <p>Name: #{employeeBean.employee.firstName} #{employeeBean.employee.lastName}</p>
+        <h:panelGroup rendered="#{employeeBean.employee.department != null}">
+            <p>Department: #{employeeBean.employee.department.name}</p>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty employeeBean.employee.tasks}">
+            <h3>Projects:</h3>
+            <ul>
+                <ui:repeat value="#{employeeBean.employee.tasks}" var="project">
+                    <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /> - #{project.description}</li>
+                </ui:repeat>
+            </ul>
+        </h:panelGroup>
+        <h:link outcome="index" value="Back to index"/>
+</h:body>
+</html>

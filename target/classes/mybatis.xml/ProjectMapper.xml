@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mapper.ProjectMapper">
+  <resultMap id="EmployeeMapForCollection" type="mybatis.model.Employee">
+    <id property="id" column="emp_id"/>
+    <result property="firstName" column="emp_first_name"/>
+    <result property="lastName" column="emp_last_name"/>
+  </resultMap>
+  <resultMap id="ProjectWithEmployeesResultMap" type="mybatis.model.Project">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <collection property="employees" ofType="mybatis.model.Employee" resultMap="EmployeeMapForCollection"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from public.project
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="mybatis.model.Project" useGeneratedKeys="true">
+    insert into public.project (description, title)
+    values (#{description,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="mybatis.model.Project">
+    update public.project
+    set description = #{description,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ProjectWithEmployeesResultMap">
+    SELECT
+      p.id,
+      p.description,
+      p.title,
+      e.id as emp_id,
+      e.first_name as emp_first_name,
+      e.last_name as emp_last_name,
+    FROM public.project p
+           LEFT JOIN public.employee_project ep ON p.id = ep.project_id
+           LEFT JOIN public.employee e ON ep.employee_id = e.id
+    WHERE p.id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="ProjectWithEmployeesResultMap">
+    SELECT
+      p.id,
+      p.description,
+      p.title,
+      e.id as emp_id,
+      e.first_name as emp_first_name,
+      e.last_name as emp_last_name,
+    FROM public.project p
+           LEFT JOIN public.employee_project ep ON p.id = ep.project_id
+           LEFT JOIN public.employee e ON ep.employee_id = e.id
+    ORDER BY p.id
+  </select>
+</mapper>

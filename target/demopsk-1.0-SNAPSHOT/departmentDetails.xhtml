@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://java.sun.com/jsf/composite"
+      xmlns:f="http://java.sun.com/jsf/core">
+<f:metadata>
+    <f:viewParam name="depId" value="#{departmentDetailsBean.departmentId}" required="true"/>
+    <f:event type="preRenderView" listener="#{departmentDetailsBean.loadDepartmentData}"/>
+</f:metadata>
+    <h:body>
+        <h1>Department #{departmentDetailsBean.department.name}</h1>
+        <h:form rendered="#{not empty departmentDetailsBean.department.employees}">
+            <h2>Employees in the department:</h2>
+            <ol>
+                <ui:repeat value="#{departmentDetailsBean.department.employees}" var="employee">
+                    <li>
+                        <h:link value="#{employee.firstName}" outcome="employeeDetails?employeeId=#{employee.id}" />
+                        <h:commandButton value="x"
+                                         actionListener="#{departmentDetailsBean.deleteEmployee(employee.id)}"
+                                         action="#{'departmentDetails?faces-redirect=true&amp;depId='.concat(departmentDetailsBean.department.id)}"/>
+                    </li>
+                </ui:repeat>
+            </ol>
+        </h:form>
+        <h4>Add new employee:</h4>
+        <h:form>
+            <div>
+                <h:outputLabel value="First Name: " for="firstNameInput"/>
+                <h:inputText id="firstNameInput" a:placeholder="First Name" value="#{departmentDetailsBean.employee.firstName}" required="true" />
+            </div>
+            <div>
+                <h:outputLabel value="Last Name: " for="lastNameInput"/>
+                <h:inputText id="lastNameInput" a:placeholder="Last Name" value="#{departmentDetailsBean.employee.lastName}" required="true" />
+            </div>
+            <br/>
+            <div>
+                <h:commandButton value="Add employee to department"
+                                 actionListener="#{departmentDetailsBean.createEmployee()}"
+                                 action="#{'departmentDetails?faces-redirect=true&amp;depId='.concat(departmentDetailsBean.department.id)}">
+                </h:commandButton>
+            </div>
+        </h:form>
+        <h:form>
+            <h:commandButton value="DELETE THIS DEPARTMENT"
+                             action="#{departmentDetailsBean.deleteDepartment()}"/>
+        </h:form>
+        <br/>
+        <h:link outcome="index" value="Back to index page"/>
+    </h:body>
+</html>

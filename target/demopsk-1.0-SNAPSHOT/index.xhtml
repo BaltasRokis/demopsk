@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+<h:body>
+    <div>
+        <h2>Departments</h2>
+        <h4>Current departments:</h4>
+        <ol>
+            <ui:repeat value="#{departmentBean.departments}" var="dep">
+                <li><h:link value="#{dep.name}" outcome="departmentDetails?depId=#{dep.id}" /></li>
+            </ui:repeat>
+        </ol>
+        <h4>Create new department:</h4>
+        <h:form>
+            <div>
+                <h:outputLabel value="Name:" for="nameInput" />
+                <h:inputText id="nameInput" value="#{departmentBean.department.name}" required="true" />
+            </div>
+            <br/>
+            <h:commandButton value="Add new department" actionListener="#{departmentBean.create()}" action="index?faces-redirect=true"/>
+        </h:form>
+    </div>
+    <div>
+        <h2>Projects</h2>
+        <h4>Current projects:</h4>
+        <ol>
+            <ui:repeat value="#{projectBean.projects}" var="project">
+                <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /></li>
+            </ui:repeat>
+        </ol>
+        <h4>Create new project:</h4>
+        <h:form>
+            <div>
+                <h:outputLabel value="Title:" for="titleInput" />
+                <h:inputText id="titleInput" value="#{projectBean.project.title}" required="true" />
+            </div>
+
+            <div>
+                <h:outputLabel value="Description:" for="descriptionInput" />
+                <h:inputText id="descriptionInput" value="#{projectBean.project.description}" required="true" />
+            </div>
+            <div>
+                <h:outputLabel value="Employees:" for="employeeCheckboxes" />
+                <h:selectManyCheckbox id="employeeCheckboxes" value="#{projectBean.project.employees}" layout="pageDirection">
+                    <f:selectItems value="#{employeeBean.getEmployees()}" var="emp"
+                                   itemValue="#{emp}" itemLabel="#{emp.firstName} #{emp.lastName} - #{emp.department.name}" />
+                </h:selectManyCheckbox>
+            </div>
+            <br/>
+            <h:commandButton value="Add new project" actionListener="#{projectBean.create()}" action="index?faces-redirect=true"/>
+        </h:form>
+    </div>
+    <div>
+        <h:link outcome="mybatis/departments" value="MyBatis implementation"/>
+    </div>
+</h:body>
+</html>
