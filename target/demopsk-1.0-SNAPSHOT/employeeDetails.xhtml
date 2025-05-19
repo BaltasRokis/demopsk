@@ -24,6 +24,15 @@
                 </ui:repeat>
             </ul>
         </h:panelGroup>
-        <h:link outcome="index" value="Back to index"/>
+    <h:panelGroup rendered="#{not empty employeeBean.employee.startTime}">
+        <p>Working hours: #{employeeBean.employee.startTime} – #{employeeBean.employee.endTime}</p>
+    </h:panelGroup>
+    <h:form>
+        <h:commandButton value="Generate Work Hours"
+                         action="#{employeeBean.generateWorkHours}">
+            <f:ajax execute="@form" render="@form"/>
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="index" value="Back to index"/>
 </h:body>
 </html>

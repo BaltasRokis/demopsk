@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeeDAO;
 import persistence.ProjectDAO;
-import services.ProjectDisplayService;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -26,8 +25,6 @@ public class ProjectDetailsBean implements Serializable {
     @Inject
     private EmployeeDAO employeeDAO;
 
-    @Inject
-    private ProjectDisplayService projectDisplayService;
 
     @Getter
     @Setter
@@ -49,10 +46,6 @@ public class ProjectDetailsBean implements Serializable {
         return projectDAO.findEmployeesNotAssignedToProject(project.getId());
     }
 
-    public List<Employee> getNewEmployees() {
-        return projectDisplayService.getNewEmployees(project.getId());
-    }
-
     @Transactional
     public void addEmployeesToProject() {
         var managedProject = projectDAO.find(project.getId());
@@ -63,7 +56,6 @@ public class ProjectDetailsBean implements Serializable {
             var employee = employeeDAO.find(employeeId);
             if(employee != null){
                 managedProject.getEmployees().add(employee);
-                projectDisplayService.addNewEmployeeToProject(project.getId(), employee);
             }
         }
     }
@@ -78,7 +70,6 @@ public class ProjectDetailsBean implements Serializable {
         if (employee == null || !managedProject.getEmployees().contains(employee))
             return;
         managedProject.getEmployees().remove(employee);
-        projectDisplayService.removeNewEmployeeToProject(project.getId(), employee);
     }
 
     @Transactional

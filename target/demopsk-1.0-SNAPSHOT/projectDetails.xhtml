@@ -24,14 +24,6 @@
                 </ui:repeat>
             </ol>
         </h:form>
-        <h:form rendered="#{not empty projectDetailsBean.getNewEmployees()}">
-            <h2>Newbies to the project:</h2>
-            <ol>
-                <ui:repeat value="#{projectDetailsBean.getNewEmployees()}" var="employee">
-                    <li>#{employee.firstName} #{employee.lastName}</li>
-                </ui:repeat>
-            </ol>
-        </h:form>
         <h:form>
             <div>
                 <h:outputLabel value="Employees that are free:" for="employeeCheckboxes" />

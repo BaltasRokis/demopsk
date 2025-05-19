@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,13 @@ public class Employee implements Serializable {
 
     @ManyToMany(mappedBy = "employees")
     private List<Project> tasks = new ArrayList<>();
+
+    @Column(name = "START_TIME")
+    private LocalTime startTime;
+
+    @Column(name = "END_TIME")
+    private LocalTime endTime;
+
 
     @Version
     @Column(name = "OPT_LOCK_VERSION")

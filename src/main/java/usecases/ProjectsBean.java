@@ -4,7 +4,6 @@ import entities.Project;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.ProjectDAO;
-import services.ProjectDisplayService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -21,9 +20,6 @@ public class ProjectsBean implements Serializable {
     @Inject
     private ProjectDAO projectDAO;
 
-    @Inject
-    private ProjectDisplayService projectDisplayService;
-
     @Getter
     @Setter
     private Project project = new Project();
@@ -39,9 +35,6 @@ public class ProjectsBean implements Serializable {
     @Transactional
     public void create() {
         projectDAO.persist(project);
-        for (var emp : project.getEmployees()) {
-            projectDisplayService.addNewEmployeeToProject(project.getId(), emp);
-        }
     }
 
     private void loadProjects() {
