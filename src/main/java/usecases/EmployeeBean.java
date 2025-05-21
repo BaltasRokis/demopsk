@@ -4,6 +4,7 @@ import entities.Employee;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeeDAO;
+import services.OptimisticLockService;
 import services.WorkHourService;
 
 import javax.faces.view.ViewScoped;
@@ -21,6 +22,9 @@ public class EmployeeBean implements Serializable {
     @Inject
     private EmployeeDAO employeeDAO;
 
+    @Inject
+    private OptimisticLockService optimisticLockService;
+
     @Getter
     @Setter
     private Employee employee;
@@ -35,6 +39,10 @@ public class EmployeeBean implements Serializable {
 
     public void loadEmployeeDetails(){
         employee = employeeDAO.find(employeeId);
+    }
+
+    public void simulateConflict() {
+        optimisticLockService.simulateOptimisticLockConflict();
     }
 
     @Transactional

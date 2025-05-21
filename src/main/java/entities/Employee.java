@@ -1,5 +1,7 @@
 package entities;
 
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import lombok.*;
@@ -24,30 +26,36 @@ public class Employee implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
+    @JsonbProperty("first_name")
     @Size(max = 100)
     @Column(name = "FIRST_NAME")
     private String firstName;
 
+    @JsonbProperty("last_name")
     @Size(max = 100)
     @Column(name = "LAST_NAME")
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "DEPARTMENT_ID", nullable = false)
+    @JoinColumn(name = "DEPARTMENT_ID")
+    @JsonbTransient
     private Department department;
 
     @ManyToMany(mappedBy = "employees")
+    @JsonbTransient
     private List<Project> tasks = new ArrayList<>();
 
     @Column(name = "START_TIME")
+    @JsonbTransient
     private LocalTime startTime;
 
     @Column(name = "END_TIME")
+    @JsonbTransient
     private LocalTime endTime;
-
 
     @Version
     @Column(name = "OPT_LOCK_VERSION")
+    @JsonbTransient
     private Integer version;
 
     @Override

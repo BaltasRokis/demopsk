@@ -33,6 +33,9 @@
             <f:ajax execute="@form" render="@form"/>
         </h:commandButton>
     </h:form>
+    <h:form>
+        <h:commandButton value="Simulate Conflict" action="#{employeeBean.simulateConflict}" />
+    </h:form>
     <h:link outcome="index" value="Back to index"/>
 </h:body>
 </html>

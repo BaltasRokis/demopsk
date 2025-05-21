@@ -20,6 +20,7 @@ public abstract class BaseDAO<T> {
         em.persist(entity);
     }
 
+
     public void removeById(Object primaryKey) {
         T entityToRemove = em.find(entityClass, primaryKey);
         if (entityToRemove != null) {
