@@ -17,8 +17,8 @@
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
     <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
-    <result column="starttime" jdbcType="TIMESTAMP" property="starttime"/>
-    <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
     <association property="department" resultMap="DepartmentMapForAssociation"/>
     <collection property="tasks" ofType="mybatis.model.Project" resultMap="ProjectMapForCollection"/>
   </resultMap>
@@ -30,7 +30,7 @@
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="mybatis.model.Employee" useGeneratedKeys="true">
     insert into public.employee (
-      first_name, last_name, department_id, starttime, endtime
+      first_name, last_name, department_id, start_time, end_time
     )
     values (
              #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR},
@@ -43,8 +43,8 @@
     set first_name = #{firstName,jdbcType=VARCHAR},
         last_name = #{lastName,jdbcType=VARCHAR},
         department_id = #{departmentId,jdbcType=INTEGER},
-        starttime = #{starttime,jdbcType=TIMESTAMP},
-        endtime = #{endtime,jdbcType=TIMESTAMP}
+        start_time = #{starttime,jdbcType=TIMESTAMP},
+        end_time = #{endtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -53,8 +53,8 @@
       e.id,
       e.first_name,
       e.last_name,
-      e.starttime,
-      e.endtime,
+      e.start_time,
+      e.end_time,
       d.id              AS dept_id,
       d.name            AS dept_name,
       p.id              AS proj_id,
@@ -73,8 +73,8 @@
       e.id,
       e.first_name,
       e.last_name,
-      e.starttime,
-      e.endtime,
+      e.start_time,
+      e.end_time,
       d.id              AS dept_id,
       d.name            AS dept_name,
       p.id              AS proj_id,
