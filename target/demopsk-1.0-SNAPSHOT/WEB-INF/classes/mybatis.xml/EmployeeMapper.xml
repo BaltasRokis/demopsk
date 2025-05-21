@@ -1,44 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mybatis.mapper.EmployeeMapper">
+
   <resultMap id="DepartmentMapForAssociation" type="mybatis.model.Department">
     <id property="id" column="dept_id"/>
     <result property="name" column="dept_name"/>
   </resultMap>
+
   <resultMap id="ProjectMapForCollection" type="mybatis.model.Project">
     <id property="id" column="proj_id"/>
     <result property="title" column="proj_title"/>
     <result property="description" column="proj_description"/>
   </resultMap>
+
   <resultMap id="BaseResultMap" type="mybatis.model.Employee">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
-    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
-    <association property="department" resultMap="DepartmentMapForAssociation" />
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
+    <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
+    <result column="start_time" jdbcType="LOCALTIME" property="startTime"/>
+    <result column="end_time" jdbcType="LOCALTIME" property="endTime"/>
+    <association property="department" resultMap="DepartmentMapForAssociation"/>
     <collection property="tasks" ofType="mybatis.model.Project" resultMap="ProjectMapForCollection"/>
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from public.employee
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="mybatis.model.Employee" useGeneratedKeys="true">
-    insert into public.employee (first_name, last_name, department_id
-      )
-    values (#{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}
-      )
+    insert into public.employee (
+      first_name, last_name, department_id, start_time, end_time
+    )
+    values (
+             #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR},
+             #{departmentId,jdbcType=INTEGER}, #{startTime,jdbcType=LOCALTIME}, #{endTime,jdbcType=LOCALTIME}
+           )
   </insert>
+
   <update id="updateByPrimaryKey" parameterType="mybatis.model.Employee">
     update public.employee
     set first_name = #{firstName,jdbcType=VARCHAR},
-      last_name = #{lastName,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=INTEGER}
+        last_name = #{lastName,jdbcType=VARCHAR},
+        department_id = #{departmentId,jdbcType=INTEGER},
+        start_time = #{startTime,jdbcType=LOCALTIME},
+        end_time = #{endTime,jdbcType=LOCALTIME}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT
       e.id,
       e.first_name,
       e.last_name,
+      e.start_time,
+      e.end_time,
       d.id              AS dept_id,
       d.name            AS dept_name,
       p.id              AS proj_id,
@@ -48,15 +64,17 @@
            LEFT JOIN public.department d ON e.department_id = d.id
            LEFT JOIN public.project_employee pe ON e.id = pe.employee_id
            LEFT JOIN public.project p ON pe.project_id = p.id
-    ORDER BY
-      e.id
     WHERE e.id = #{id,jdbcType=INTEGER}
+    ORDER BY e.id
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
     SELECT
       e.id,
       e.first_name,
       e.last_name,
+      e.start_time,
+      e.end_time,
       d.id              AS dept_id,
       d.name            AS dept_name,
       p.id              AS proj_id,
@@ -66,7 +84,7 @@
            LEFT JOIN public.department d ON e.department_id = d.id
            LEFT JOIN public.project_employee pe ON e.id = pe.employee_id
            LEFT JOIN public.project p ON pe.project_id = p.id
-    ORDER BY
-      e.id
+    ORDER BY e.id
   </select>
+
 </mapper>
