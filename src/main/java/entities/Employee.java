@@ -53,6 +53,9 @@ public class Employee implements Serializable {
     @JsonbTransient
     private LocalTime endTime;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Pen> pens = new ArrayList<>();
+
     @Version
     @Column(name = "OPT_LOCK_VERSION")
     @JsonbTransient

@@ -36,6 +36,14 @@
     <h:form>
         <h:commandButton value="Simulate Conflict" action="#{employeeBean.simulateConflict}" />
     </h:form>
+    <h:panelGroup rendered="#{not empty employeeBean.employee.pens}">
+        <h3>Pens:</h3>
+        <ul>
+            <ui:repeat value="#{employeeBean.employee.pens}" var="pen">
+                <li>#{pen.name}</li>
+            </ui:repeat>
+        </ul>
+    </h:panelGroup>
     <h:link outcome="index" value="Back to index"/>
 </h:body>
 </html>
