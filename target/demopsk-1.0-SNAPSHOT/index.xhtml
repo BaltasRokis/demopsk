@@ -6,70 +6,102 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <style type="">
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .grid-item {
+            border: 1px solid #ccc;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</h:head>
 <h:body>
-    <div>
-        <h2>Departments</h2>
-        <h4>Current departments:</h4>
-        <ol>
-            <ui:repeat value="#{departmentBean.departments}" var="dep">
-                <li><h:link value="#{dep.name}" outcome="departmentDetails?depId=#{dep.id}" /></li>
-            </ui:repeat>
-        </ol>
-        <h4>Create new department:</h4>
-        <h:form>
-            <div>
-                <h:outputLabel value="Name:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{departmentBean.department.name}" required="true" />
-            </div>
-            <br/>
-            <h:commandButton value="Add new department" actionListener="#{departmentBean.create()}" action="index?faces-redirect=true"/>
-        </h:form>
-    </div>
-    <div>
-        <h2>Projects</h2>
-        <h4>Current projects:</h4>
-        <ol>
-            <ui:repeat value="#{projectBean.projects}" var="project">
-                <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /></li>
-            </ui:repeat>
-        </ol>
-        <h4>Create new project:</h4>
-        <h:form>
-            <div>
-                <h:outputLabel value="Title:" for="titleInput" />
-                <h:inputText id="titleInput" value="#{projectBean.project.title}" required="true" />
-            </div>
+    <div class="grid-container">
 
-            <div>
-                <h:outputLabel value="Description:" for="descriptionInput" />
-                <h:inputText id="descriptionInput" value="#{projectBean.project.description}" required="true" />
-            </div>
-            <div>
-                <h:outputLabel value="Employees:" for="employeeCheckboxes" />
-                <h:selectManyCheckbox id="employeeCheckboxes" value="#{projectBean.project.employees}" layout="pageDirection">
-                    <f:selectItems value="#{employeeBean.getEmployees()}" var="emp"
-                                   itemValue="#{emp}" itemLabel="#{emp.firstName} #{emp.lastName} - #{emp.department.name}" />
-                </h:selectManyCheckbox>
-            </div>
-            <br/>
-            <h:commandButton value="Add new project" actionListener="#{projectBean.create()}" action="index?faces-redirect=true"/>
-        </h:form>
-    </div>
-    <div>
-        <h:form>
-            <h:commandButton value="Start Calculation" action="#{asyncBean.startCalculation}" />
-            <h:outputText value="#{asyncBean.message}" />
-        </h:form>
+        <div class="grid-item">
+            <h2>Departments</h2>
+            <h4>Current departments:</h4>
+            <ol>
+                <ui:repeat value="#{departmentBean.departments}" var="dep">
+                    <li><h:link value="#{dep.name}" outcome="departmentDetails?depId=#{dep.id}" /></li>
+                </ui:repeat>
+            </ol>
+            <h4>Create new department:</h4>
+            <h:form>
+                <div>
+                    <h:outputLabel value="Name:" for="nameInput" />
+                    <h:inputText id="nameInput" value="#{departmentBean.department.name}" required="true" />
+                </div>
+                <br/>
+                <h:commandButton value="Add new department" actionListener="#{departmentBean.create()}" action="index?faces-redirect=true"/>
+            </h:form>
+        </div>
 
-    </div>
-    <div>
-        <h:form>
-            <h3>Greeting:</h3>
-            <h:outputText value="#{greetingBean.greeting}"/>
-        </h:form>
-    </div>
-    <div>
-        <h:link outcome="mybatis/departments" value="MyBatis implementation"/>
+
+        <div class="grid-item">
+            <h2>Projects</h2>
+            <h4>Current projects:</h4>
+            <ol>
+                <ui:repeat value="#{projectBean.projects}" var="project">
+                    <li><h:link value="#{project.title}" outcome="projectDetails?projectId=#{project.id}" /></li>
+                </ui:repeat>
+            </ol>
+            <h4>Create new project:</h4>
+            <h:form>
+                <div>
+                    <h:outputLabel value="Title:" for="titleInput" />
+                    <h:inputText id="titleInput" value="#{projectBean.project.title}" required="true" />
+                </div>
+                <div>
+                    <h:outputLabel value="Description:" for="descriptionInput" />
+                    <h:inputText id="descriptionInput" value="#{projectBean.project.description}" required="true" />
+                </div>
+                <div>
+                    <h:outputLabel value="Employees:" for="employeeCheckboxes" />
+                    <h:selectManyCheckbox id="employeeCheckboxes" value="#{projectBean.project.employees}" layout="pageDirection">
+                        <f:selectItems value="#{employeeBean.getEmployees()}" var="emp"
+                                       itemValue="#{emp}" itemLabel="#{emp.firstName} #{emp.lastName} - #{emp.department.name}" />
+                    </h:selectManyCheckbox>
+                </div>
+                <br/>
+                <h:commandButton value="Add new project" actionListener="#{projectBean.create()}" action="index?faces-redirect=true"/>
+            </h:form>
+        </div>
+
+
+        <div class="grid-item">
+            <h:form>
+                <h2>Async Calculation</h2>
+                <h:commandButton value="Start Calculation" action="#{asyncBean.startCalculation}" />
+                <h:outputText value="#{asyncBean.message}" />
+            </h:form>
+        </div>
+
+
+        <div class="grid-item">
+            <h:form>
+                <h2>Greeting</h2>
+                <h:outputText value="#{greetingBean.greeting}"/>
+            </h:form>
+        </div>
+
+
+        <div class="grid-item">
+            <h2>Other</h2>
+            <h:link outcome="mybatis/departments" value="MyBatis implementation"/>
+        </div>
     </div>
 </h:body>
 </html>

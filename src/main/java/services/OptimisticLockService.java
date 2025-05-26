@@ -16,7 +16,7 @@ public class OptimisticLockService {
 
     public void simulateOptimisticLockConflict() {
 
-        Employee emp1 = em.find(Employee.class, 7);
+        Employee emp1 = em.find(Employee.class, 4);
 
 
         EntityManager em2 = Persistence
@@ -24,7 +24,7 @@ public class OptimisticLockService {
                 .createEntityManager();
 
         em2.getTransaction().begin();
-        Employee emp2 = em2.find(Employee.class, 7);
+        Employee emp2 = em2.find(Employee.class, 4);
 
 
         emp2.setLastName("UpdatedByOther");

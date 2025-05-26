@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <context id="demopsk" targetRuntime="MyBatis3Simple">
         <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://localhost:1234/demopsk"
+                        connectionURL="jdbc:postgresql://localhost:5432/demopsk"
                         userId="postgres"
                         password="postgres">
         </jdbcConnection>
